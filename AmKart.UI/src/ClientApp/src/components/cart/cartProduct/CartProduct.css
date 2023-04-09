@@ -1,0 +1,11 @@
+﻿.cart-product__image {
+    height: 200px;
+}
+
+.cart-product__input {
+    width: 50px;
+}
+
+.cart-product__item {
+    padding: 15px;
+}

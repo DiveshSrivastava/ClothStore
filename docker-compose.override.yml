@@ -1,0 +1,50 @@
+version: '3.4'
+
+#services:
+#  amkart.api.gateway:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=https://+:443;http://+:80
+#    ports:
+#      - "80"
+#      - "443"
+#    volumes:
+#      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+#      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+#  amkart.services.identity:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=https://+:443;http://+:80
+#    ports:
+#      - "80"
+#      - "443"
+#    volumes:
+#      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+#      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+#  amkart.services.order:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+#    volumes:
+#      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+#  amkart.services.product:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+#    volumes:
+#      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+#  amkart.ui:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=https://+:443;http://+:80
+#    ports:
+#      - "80"
+#      - "443"
+#    volumes:
+#      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+#      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,0 +1,156 @@
+version: '3.4'
+
+services:
+  consul:
+    image: consul
+    container_name: consul
+    restart: always
+    ports:
+    - 8500:8500
+    networks:
+    - amkartnetwork
+    volumes:
+    - consul:/consul/data
+
+  fabio:
+    image: fabiolb/fabio
+    container_name: fabio
+    restart: always
+    environment:
+    - FABIO_REGISTRY_CONSUL_ADDR=consul:8500
+    networks:
+    - amkartnetwork
+    ports:
+    - 9998:9998
+    - 9999:9999
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    container_name: rabbitmq
+    restart: always
+    ports:
+    - 5672:5672
+    - 15672:15672
+    networks:
+    - amkartnetwork
+    volumes: 
+    - rabbitmq:/var/lib/rabbitmq
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+    - 27017:27017
+    networks:
+    - amkartnetwork
+    # network_mode: host
+    volumes:
+    - mongo:/data/db
+
+  amkart.api.gateway:
+    image: ${DOCKER_REGISTRY-}amkartapigateway
+    build:
+      context: .
+      dockerfile: AmKart.Api.Gateway/src/Dockerfile
+    restart: always
+    ports:
+        - 5000:80
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - RABBIT_HOSTNAME=rabbitmq
+    networks:
+        - amkartnetwork
+    depends_on:
+        - "consul"
+        - "fabio"
+        - "mongo"
+
+  amkart.services.identity:
+    image: ${DOCKER_REGISTRY-}amkartservicesidentity
+    build:
+      context: .
+      dockerfile: AmKart.Services.Identity/src/Dockerfile
+    restart: always
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+    ports:
+        - '5002:80'
+    networks:
+        - amkartnetwork
+    depends_on:
+        - "consul"
+        - "fabio"
+        - "mongo"
+
+  amkart.services.order:
+    image: ${DOCKER_REGISTRY-}amkartservicesorder
+    build:
+      context: .
+      dockerfile: AmKart.Services.Order/src/Dockerfile
+    restart: always
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - RABBIT_HOSTNAME=rabbitmq
+    ports:
+        - '5005:80'
+    networks:
+        - amkartnetwork
+    depends_on:
+        - "consul"
+        - "fabio"
+        - "mongo"
+
+  amkart.services.product:
+    image: ${DOCKER_REGISTRY-}amkartservicesproduct
+    build:
+      context: .
+      dockerfile: AmKart.Services.Product/src/Dockerfile
+    restart: always
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - RABBIT_HOSTNAME=rabbitmq
+    ports:
+        - '5001:80'
+    networks:
+        - amkartnetwork
+    depends_on:
+        - "consul"
+        - "fabio"
+        - "mongo"
+
+  amkart.ui:
+    image: ${DOCKER_REGISTRY-}amkartui
+    build:
+      context: .
+      dockerfile: AmKart.UI/src/Dockerfile
+    restart: always
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+    ports:
+        - '44310:80'
+    networks:
+        - amkartnetwork
+    depends_on:
+        - "consul"
+        - "fabio"
+        - "mongo"
+
+networks:
+  amkartnetwork:
+    name: amkart-network
+    external: true
+
+volumes:
+  consul:
+    driver: local
+  rabbitmq:
+    driver: local
+  mongo:
+    driver: local

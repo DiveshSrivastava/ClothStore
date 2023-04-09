@@ -1,0 +1,133 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <RootNamespace>AmKart.UI</RootNamespace>
+    <UserSecretsId>af760643-63cf-4840-b8df-002e3ed86ee7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.1" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\common\**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\common\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientApp\src\common\**" />
+    <EmbeddedResource Remove="ClientApp\src\common\**" />
+    <TypeScriptCompile Remove="ClientApp\src\common\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\components\cart\cartWidget\CartWidget.tsx" />
+    <None Remove="ClientApp\src\components\file.ts" />
+    <None Remove="ClientApp\src\components\OrderCreatedPage\OrderCreatedPage.tsx" />
+    <None Remove="ClientApp\src\components\Product.tsx" />
+    <None Remove="ClientApp\src\components\products\ColorBox.tsx" />
+    <None Remove="ClientApp\src\components\products\ColorSwitcher.tsx" />
+    <None Remove="ClientApp\src\components\products\index.ts" />
+    <None Remove="ClientApp\src\components\user\Logout.tsx" />
+    <None Remove="ClientApp\src\constants\api.ts" />
+    <None Remove="ClientApp\src\containers\AccessoriesProductsPage\AccessoriesProductsPage.tsx" />
+    <None Remove="ClientApp\src\containers\FemaleProductsPage\FemaleProductsPage.tsx" />
+    <None Remove="ClientApp\src\containers\MaleProductsPage\MaleProductsPage.tsx" />
+    <None Remove="ClientApp\src\containers\ProductFilter\ProductFilter.tsx" />
+    <None Remove="ClientApp\src\containers\ProductView\ProductView.tsx" />
+    <None Remove="ClientApp\src\containers\ProductList.tsx" />
+    <None Remove="ClientApp\src\services\auth\authUtils.ts" />
+    <None Remove="ClientApp\src\services\auth\index.ts" />
+    <None Remove="ClientApp\src\state\localStorage\localStorageHelpers.ts" />
+    <None Remove="ClientApp\src\state\products\productListActions.ts" />
+    <None Remove="ClientApp\src\state\products\productListReducers.ts" />
+    <None Remove="ClientApp\src\state\products\productListtypes.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\components\BottomBanner\BottomBanner.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\cart\cartProduct\CartProduct.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\Footer\Footer.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\containers\Cart\CartProducts.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\containers\Login\Login.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\containers\Register.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\services\api\createOrder.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\state\user\index.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\state\user\userActions.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\state\user\userReducers.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\state\user\userTypes.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <!--<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    --><!-- As part of publishing, ensure the JS resources are freshly built in production mode --><!--
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+    --><!-- Include the newly-built files in the publish output --><!--
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>-->
+	
+    <ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+		<PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.5.0" />
+	</ItemGroup>
+	
+    <ItemGroup>
+      <TypeScriptCompile Update="ClientApp\src\containers\AccessoriesProductsPage\AccessoriesProductsPage.tsx">
+        <SubType>Code</SubType>
+      </TypeScriptCompile>
+      <TypeScriptCompile Update="ClientApp\src\containers\MaleProductsPage\MaleProductsPage.tsx">
+        <SubType>Code</SubType>
+      </TypeScriptCompile>
+    </ItemGroup>
+	
+    <ItemGroup>
+      <None Remove="..\.dockerignore" />
+    </ItemGroup>
+	
+    <ItemGroup>
+      <ProjectReference Include="..\..\AmKart.Common\AmKart.Common.csproj" />
+    </ItemGroup>
+	
+	
+    <ItemGroup>
+      <Folder Include="ClientApp\Images\Male\" />
+		<Folder Include="ClientApp\Images\Female\" />
+      <Folder Include="ClientApp\Images\Accessories\" />
+    </ItemGroup>
+
+</Project>

@@ -30,7 +30,7 @@ spec:
               value: Development
             - name: ASPNETCORE_URLS
               value: http://+:80
-          image: ${DOCKER_REGISTRY-}amkartui
+          image: kalpdeep/amkart.ui:latest
           name: amkart.ui
           ports:
             - containerPort: 80

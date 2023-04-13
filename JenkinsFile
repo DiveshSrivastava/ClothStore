@@ -4,88 +4,135 @@ pipeline
 
     stages 
     {
-        stage('Nuget restore') 
+        stage('Clean n Restore') 
         {
             steps 
                 {
                    echo 'Cloning repository ..'
-                   git branch: 'main',  url: 'https://github.com/DiveshSrivastava/ClothStore.git'
+                   git credentialsId: 	'19a59b64-6691-4f4c-8080-a3b279a8867f', branch: 'main',  url: 'https://github.com/DiveshSrivastava/ClothStore.git'
                 
-                    echo 'Clean solution'
-                    bat ' cd AmKart.Api.Gateway\src 
-							dotnet clean AmKart.Api.Gateway.csproj'
-					
-					bat 'cd..
-						cd..
-						cd AmKart.Services.Identity\src
-						dotnet clean AmKart.Services.Identity.csproj'
-					
-					bat 'cd..
-						cd..
+                   echo 'Clean solution'
+                    bat '''
 						cd AmKart.Common 
-						dotnet clean AmKart.Common.csproj'
+						dotnet clean AmKart.Common.csproj'''
 					
-					bat 'cd..
-						cd AmKart.Services.Product\src
-						dotnet clean AmKart.Services.Product.csproj'
+                    bat '''
+                        cd AmKart.Api.Gateway
+                        cd src 
+						dotnet clean AmKart.Api.Gateway.csproj'''
 					
-					bat ' cd..
-						cd..
-						cd AmKart.UI\src
-						dotnet clean AmKart.UI.csproj'
+				  
+					bat '''
+						cd AmKart.Services.Identity
+						cd src
+						dotnet clean AmKart.Services.Identity.csproj'''
 					
-					bat 'cd..
-						cd..
-						cd AmKart.Services.Order\src
-						dotnet clean AmKart.Services.Order.csproj'
-						
-					bat 'cd..
-						cd..'
-				
+					
+					bat '''
+						cd AmKart.Services.Product
+						cd src
+						dotnet clean AmKart.Services.Product.csproj'''
+					
+					bat '''
+						cd AmKart.Services.Order 
+						cd src
+						dotnet clean AmKart.Services.Order.csproj'''
+					
+					bat ''' 
+						cd AmKart.UI
+						cd src
+						dotnet clean AmKart.UI.csproj'''
+					
+					
                     echo 'Restoring packages ..'
-                    bat ' cd AmKart.Api.Gateway\src 
-							dotnet restore AmKart.Api.Gateway.csproj'
-					
-					bat 'cd..
-						cd..
-						cd AmKart.Services.Identity\src
-						dotnet restore AmKart.Services.Identity.csproj'
-					
-					bat 'cd..
-						cd..
+                    
+					bat '''
 						cd AmKart.Common 
-						dotnet restore AmKart.Common.csproj'
+						dotnet restore AmKart.Common.csproj'''
 					
-					bat 'cd..
-						cd AmKart.Services.Product\src
-						dotnet restore AmKart.Services.Product.csproj'
+					bat '''
+					    cd AmKart.Api.Gateway 
+                        cd src 
+						dotnet restore AmKart.Api.Gateway.csproj'''
 					
-					bat ' cd..
-						cd..
-						cd AmKart.UI\src
-						dotnet restore AmKart.UI.csproj'
+					bat '''
+						cd AmKart.Services.Identity
+						cd src
+						dotnet restore AmKart.Services.Identity.csproj'''
 					
-					bat 'cd..
-						cd..
-						cd AmKart.Services.Order\src
-						dotnet restore AmKart.Services.Order.csproj'
-						
-					bat 'cd..
-						cd..'
+					bat '''
+						cd AmKart.Services.Product
+						cd src
+						dotnet restore AmKart.Services.Product.csproj'''
+					
+					bat '''
+						cd AmKart.Services.Order
+						cd src
+						dotnet restore AmKart.Services.Order.csproj'''
 				
+				    bat '''
+						cd AmKart.UI
+						cd src
+						dotnet restore AmKart.UI.csproj'''
+					
                 }
         }
        
-        stage('Code build') 
+        stage('Build') 
         {
             steps 
             {
                 echo 'Building solution ..'
-                bat 'dotnet build'
+                
+                bat '''cd AmKart.Common
+						cd src
+						dotnet build AmKart.Common.csproj'''
+						
+				bat '''cd AmKart.API.Gateway
+						cd src
+						dotnet build AmKart.API.Gateway.csproj'''
+				
+				bat '''cd AmKart.Services.Identity
+						cd src
+						dotnet build AmKart.Services.Identity.csproj'''
+						
+				bat '''cd AmKart.Services.Product
+						cd src
+						dotnet build AmKart.Services.Product.csproj'''
+						
+				bat '''cd AmKart.Services.Order
+						cd src
+						dotnet build AmKart.Services.Order.csproj'''
+						
+				bat '''cd AmKart.UI
+						cd src
+						dotnet build AmKart.UI.csproj'''
+						
             }
         }
-       
         
-       
+        stage('Docker Image') 
+        {
+            steps 
+            {
+                echo 'Creating artifacts ..'
+                bat '''docker image build -f AmKart.Api.Gateway/src/Dockerfile -t kalpdeep/amkart.api.gateway:latest .
+                        docker push kalpdeep/amkart.api.gateway:latest '''
+                        
+                bat '''docker image build -f AmKart.UI/src/Dockerfile -t kalpdeep/amkart.ui:latest .
+                        docker push kalpdeep/amkart.ui:latest '''
+                        
+                bat '''docker image build -f AmKart.Services.Identity/src/Dockerfile -t kalpdeep/amkart.services.identity:latest .
+                        docker push kalpdeep/amkart.services.identity:latest '''
+                        
+                bat '''docker image build -f AmKart.Services.Product/src/Dockerfile -t kalpdeep/amkart.services.product:latest .
+                        docker push kalpdeep/amkart.services.product:latest '''
+                
+                bat '''docker image build -f AmKart.Services.Order/src/Dockerfile -t kalpdeep/amkart.services.order:latest .
+                        docker push kalpdeep/amkart.services.order:latest '''
+            }
+        }
+        
+        
     }
 }

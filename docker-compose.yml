@@ -50,10 +50,7 @@ services:
     - mongo:/data/db
 
   amkart.api.gateway:
-    image: ${DOCKER_REGISTRY-}amkartapigateway
-    build:
-      context: .
-      dockerfile: AmKart.Api.Gateway/src/Dockerfile
+    image: kalpdeep/amkart.api.gateway:latest
     restart: always
     ports:
         - 5000:80
@@ -69,10 +66,7 @@ services:
         - "mongo"
 
   amkart.services.identity:
-    image: ${DOCKER_REGISTRY-}amkartservicesidentity
-    build:
-      context: .
-      dockerfile: AmKart.Services.Identity/src/Dockerfile
+    image: kalpdeep/amkart.services.identity:latest
     restart: always
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
@@ -87,10 +81,7 @@ services:
         - "mongo"
 
   amkart.services.order:
-    image: ${DOCKER_REGISTRY-}amkartservicesorder
-    build:
-      context: .
-      dockerfile: AmKart.Services.Order/src/Dockerfile
+    image: kalpdeep/amkart.services.order:latest
     restart: always
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
@@ -106,10 +97,7 @@ services:
         - "mongo"
 
   amkart.services.product:
-    image: ${DOCKER_REGISTRY-}amkartservicesproduct
-    build:
-      context: .
-      dockerfile: AmKart.Services.Product/src/Dockerfile
+    image: kalpdeep/amkart.services.product:latest
     restart: always
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
@@ -125,10 +113,7 @@ services:
         - "mongo"
 
   amkart.ui:
-    image: ${DOCKER_REGISTRY-}amkartui
-    build:
-      context: .
-      dockerfile: AmKart.UI/src/Dockerfile
+    image: kalpdeep/amkart.ui:latest
     restart: always
     environment:
         - ASPNETCORE_ENVIRONMENT=Development

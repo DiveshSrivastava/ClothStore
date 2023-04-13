@@ -32,7 +32,7 @@ spec:
               value: http://+:80
             - name: RABBIT_HOSTNAME
               value: rabbitmq
-          image: ${DOCKER_REGISTRY-}amkartapigateway
+          image: kalpdeep/amkart.api.gateway:latest
           name: amkart.api.gateway
           ports:
             - containerPort: 80

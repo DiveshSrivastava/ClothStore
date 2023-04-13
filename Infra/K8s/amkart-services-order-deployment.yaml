@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe --file docker-compose.yml convert
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: amkart-services-order
+  name: amkart-services-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: amkart-services-order
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe --file docker-compose.yml convert
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/amkart-network: "true"
+        io.kompose.service: amkart-services-order
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_URLS
+              value: http://+:80
+            - name: RABBIT_HOSTNAME
+              value: rabbitmq
+          image: ${DOCKER_REGISTRY-}amkartservicesorder
+          name: amkart.services.order
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

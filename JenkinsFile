@@ -1,0 +1,34 @@
+pipeline 
+{
+    agent any
+
+    stages 
+    {
+        stage('Nuget restore') 
+        {
+            steps 
+                {
+                   echo 'Cloning repository ..'
+                   git branch: 'main',  url: 'https://github.com/DiveshSrivastava/ClothStore.git'
+                
+                    echo 'Clean solution'
+                    bat 'dotnet clean'
+                
+                    echo 'Restoring packages ..'
+                    bat 'dotnet restore'
+                }
+        }
+       
+        stage('Code build') 
+        {
+            steps 
+            {
+                echo 'Building solution ..'
+                bat 'dotnet build'
+            }
+        }
+       
+        
+       
+    }
+}

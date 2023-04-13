@@ -12,20 +12,66 @@ pipeline
                    git branch: 'main',  url: 'https://github.com/DiveshSrivastava/ClothStore.git'
                 
                     echo 'Clean solution'
-                    bat 'dotnet clean AmKart.Api.Gateway.csproj'
-					bat 'dotnet clean AmKart.Services.Identity.csproj'
-					bat 'dotnet clean AmKart.Common.csproj'
-					bat 'dotnet clean AmKart.Services.Product.csproj'
-					bat 'dotnet clean AmKart.UI.csproj'
-					bat 'dotnet clean AmKart.Services.Order.csproj'
+                    bat ' cd AmKart.Api.Gateway\src 
+							dotnet clean AmKart.Api.Gateway.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Services.Identity\src
+						dotnet clean AmKart.Services.Identity.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Common 
+						dotnet clean AmKart.Common.csproj'
+					
+					bat 'cd..
+						cd AmKart.Services.Product\src
+						dotnet clean AmKart.Services.Product.csproj'
+					
+					bat ' cd..
+						cd..
+						cd AmKart.UI\src
+						dotnet clean AmKart.UI.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Services.Order\src
+						dotnet clean AmKart.Services.Order.csproj'
+						
+					bat 'cd..
+						cd..'
 				
                     echo 'Restoring packages ..'
-                    bat 'dotnet restore AmKart.Api.Gateway.csproj'
-					bat 'dotnet restore AmKart.Services.Identity.csproj'
-					bat 'dotnet restore AmKart.Common.csproj'
-					bat 'dotnet restore AmKart.Services.Product.csproj'
-					bat 'dotnet restore AmKart.UI.csproj'
-					bat 'dotnet restore AmKart.Services.Order.csproj'
+                    bat ' cd AmKart.Api.Gateway\src 
+							dotnet restore AmKart.Api.Gateway.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Services.Identity\src
+						dotnet restore AmKart.Services.Identity.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Common 
+						dotnet restore AmKart.Common.csproj'
+					
+					bat 'cd..
+						cd AmKart.Services.Product\src
+						dotnet restore AmKart.Services.Product.csproj'
+					
+					bat ' cd..
+						cd..
+						cd AmKart.UI\src
+						dotnet restore AmKart.UI.csproj'
+					
+					bat 'cd..
+						cd..
+						cd AmKart.Services.Order\src
+						dotnet restore AmKart.Services.Order.csproj'
+						
+					bat 'cd..
+						cd..'
 				
                 }
         }

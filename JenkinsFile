@@ -116,23 +116,31 @@ pipeline
             steps 
             {
                 echo 'Creating artifacts ..'
-                bat '''docker image build -f AmKart.Api.Gateway/src/Dockerfile -t kalpdeep/amkart.api.gateway:latest .
-                        docker push kalpdeep/amkart.api.gateway:latest '''
+                bat '''docker image build -f AmKart.Api.Gateway/src/Dockerfile -t kalpdeep/amkart-api-gateway:latest .
+                        docker push kalpdeep/amkart-api-gateway:latest '''
                         
-                bat '''docker image build -f AmKart.UI/src/Dockerfile -t kalpdeep/amkart.ui:latest .
-                        docker push kalpdeep/amkart.ui:latest '''
+                bat '''docker image build -f AmKart.UI/src/Dockerfile -t kalpdeep/amkart-ui:latest .
+                        docker push kalpdeep/amkart-ui:latest '''
                         
-                bat '''docker image build -f AmKart.Services.Identity/src/Dockerfile -t kalpdeep/amkart.services.identity:latest .
-                        docker push kalpdeep/amkart.services.identity:latest '''
+                bat '''docker image build -f AmKart.Services.Identity/src/Dockerfile -t kalpdeep/amkart-services-identity:latest .
+                        docker push kalpdeep/amkart-services-identity:latest '''
                         
-                bat '''docker image build -f AmKart.Services.Product/src/Dockerfile -t kalpdeep/amkart.services.product:latest .
-                        docker push kalpdeep/amkart.services.product:latest '''
+                bat '''docker image build -f AmKart.Services.Product/src/Dockerfile -t kalpdeep/amkart-services-product:latest .
+                        docker push kalpdeep/amkart-services-product:latest '''
                 
-                bat '''docker image build -f AmKart.Services.Order/src/Dockerfile -t kalpdeep/amkart.services.order:latest .
-                        docker push kalpdeep/amkart.services.order:latest '''
+                bat '''docker image build -f AmKart.Services.Order/src/Dockerfile -t kalpdeep/amkart-services-order:latest .
+                        docker push kalpdeep/amkart-services-order:latest '''
             }
         }
-        
+         stage('Deploy') 
+        {
+            steps 
+            {
+                echo 'Deploying artifacts ..'
+                bat 'docker-compose up -d'
+               
+            }
+        }
         
     }
 }

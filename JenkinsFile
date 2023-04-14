@@ -10,7 +10,8 @@ pipeline
             steps 
             {
                 echo 'Deploying artifacts ..'
-                bat 'docker-compose up -d'
+                bat '''docker network create amkart-network
+                docker-compose up -d'''
                
             }
         }

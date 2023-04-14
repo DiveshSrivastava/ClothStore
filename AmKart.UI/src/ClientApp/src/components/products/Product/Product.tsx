@@ -26,7 +26,7 @@ export const Product: React.FC<ProductProps> = ({
             <img sizes="100vw" alt="" src={imageURLs[selectedColorIndex]} className="product__image w-100"></img>
             <div className="product__description">
                 <p className="product__name"> {name} </p>
-                <p className="product__price"> Rs{price} </p>
+                <p className="product__price"> ${price} </p>
             </div>
         </Link>
         <div className="color-switcher">

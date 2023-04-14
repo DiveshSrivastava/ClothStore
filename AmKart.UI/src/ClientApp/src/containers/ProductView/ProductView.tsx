@@ -58,7 +58,7 @@ const ProductView: React.FC<ProductViewProps> = ({
                     </div>
                     <div className="product-view__description product-info col-sm-6 col-lg-5">
                         <h1 className="product-view__name">{name}</h1>
-                        <div>Rs{price}</div>
+                        <div>${price}</div>
                         <hr />
                         <div className="color-switcher">
                             <p>Color:</p>

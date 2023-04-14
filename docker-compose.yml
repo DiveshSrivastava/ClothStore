@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3'
 
 services:
   consul:
@@ -6,23 +6,23 @@ services:
     container_name: consul
     restart: always
     ports:
-    - 8500:8500
+      - 8500:8500
     networks:
-    - amkartnetwork
+      - amkartnetwork
     volumes:
-    - consul:/consul/data
+      - consul:/consul/data
 
   fabio:
     image: fabiolb/fabio
     container_name: fabio
     restart: always
     environment:
-    - FABIO_REGISTRY_CONSUL_ADDR=consul:8500
+      - FABIO_REGISTRY_CONSUL_ADDR=consul:8500
     networks:
-    - amkartnetwork
+      - amkartnetwork
     ports:
-    - 9998:9998
-    - 9999:9999
+      - 9998:9998
+      - 9999:9999
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -30,102 +30,102 @@ services:
     container_name: rabbitmq
     restart: always
     ports:
-    - 5672:5672
-    - 15672:15672
+      - 5672:5672
+      - 15672:15672
     networks:
-    - amkartnetwork
-    volumes: 
-    - rabbitmq:/var/lib/rabbitmq
+      - amkartnetwork
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
 
   mongo:
     image: mongo
     container_name: mongo
     restart: always
     ports:
-    - 27017:27017
+      - 27017:27017
     networks:
-    - amkartnetwork
-    # network_mode: host
+      - amkartnetwork
+      # network_mode: host
     volumes:
-    - mongo:/data/db
+      - mongo:/data/db
 
-  amkart.api.gateway:
-    image: kalpdeep/amkart.api.gateway:latest
+  amkart-api-gateway:
+    image: kalpdeep/amkart-api-gateway:latest
     restart: always
     ports:
-        - 5000:80
+      - 5000:80
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
-        - RABBIT_HOSTNAME=rabbitmq
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RABBIT_HOSTNAME=rabbitmq
     networks:
-        - amkartnetwork
+      - amkartnetwork
     depends_on:
-        - "consul"
-        - "fabio"
-        - "mongo"
+      - "consul"
+      - "fabio"
+      - "mongo"
 
-  amkart.services.identity:
-    image: kalpdeep/amkart.services.identity:latest
+  amkart-services-identity:
+    image: kalpdeep/amkart-services-identity:latest
     restart: always
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
     ports:
-        - '5002:80'
+      - '5002:80'
     networks:
-        - amkartnetwork
+      - amkartnetwork
     depends_on:
-        - "consul"
-        - "fabio"
-        - "mongo"
+      - "consul"
+      - "fabio"
+      - "mongo"
 
-  amkart.services.order:
-    image: kalpdeep/amkart.services.order:latest
+  amkart-services-order:
+    image: kalpdeep/amkart-services-order:latest
     restart: always
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
-        - RABBIT_HOSTNAME=rabbitmq
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RABBIT_HOSTNAME=rabbitmq
     ports:
-        - '5005:80'
+      - '5005:80'
     networks:
-        - amkartnetwork
+      - amkartnetwork
     depends_on:
-        - "consul"
-        - "fabio"
-        - "mongo"
+      - "consul"
+      - "fabio"
+      - "mongo"
 
-  amkart.services.product:
-    image: kalpdeep/amkart.services.product:latest
+  amkart-services-product:
+    image: kalpdeep/amkart-services-product:latest
     restart: always
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
-        - RABBIT_HOSTNAME=rabbitmq
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RABBIT_HOSTNAME=rabbitmq
     ports:
-        - '5001:80'
+      - '5001:80'
     networks:
-        - amkartnetwork
+      - amkartnetwork
     depends_on:
-        - "consul"
-        - "fabio"
-        - "mongo"
+      - "consul"
+      - "fabio"
+      - "mongo"
 
-  amkart.ui:
-    image: kalpdeep/amkart.ui:latest
+  amkart-ui:
+    image: kalpdeep/amkart-ui:latest
     restart: always
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
     ports:
-        - '44310:80'
+      - '44310:80'
     networks:
-        - amkartnetwork
+      - amkartnetwork
     depends_on:
-        - "consul"
-        - "fabio"
-        - "mongo"
+      - "consul"
+      - "fabio"
+      - "mongo"
 
 networks:
   amkartnetwork:

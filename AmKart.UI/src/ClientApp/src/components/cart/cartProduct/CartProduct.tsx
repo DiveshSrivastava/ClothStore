@@ -28,7 +28,7 @@ export const CartProduct: React.FC<CartProductProps> = ({
                     <div className="cart-product__item">
                         <p>Item</p>
                         <i className="cart-product__name text-danger"> {name} </i>
-                        <strong className="cart-product__price d-block"> Rs{price} </strong>
+                        <strong className="cart-product__price d-block"> ${price} </strong>
                         <strong className="d-block">Color - {color} </strong>
                         <strong className="d-block">Size - {size} </strong>
                    </div>

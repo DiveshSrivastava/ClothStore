@@ -30,7 +30,7 @@ export const CartProducts: React.FC<CartProductsProps> = ({ cart, changeQuantity
             })}
 
             <div className="cart-products__description">
-                <strong className="d-block">Sub-total (inc. VAT) = Rs{totalCost}</strong>
+                <strong className="d-block">Sub-total (inc. VAT) = ${totalCost}</strong>
                 <strong>NB: VAT will be removed at checkout for Yearbook 5 purchases.</strong>
                 <p>Free Returns. Free Repairs For Life.</p>
             </div>

@@ -132,7 +132,15 @@ pipeline
                         docker push kalpdeep/amkart-services-order:latest '''
             }
         }
-        
+         stage('Deploy') 
+        {
+            steps 
+            {
+                echo 'Deploying artifacts ..'
+                bat 'docker-compose up -d'
+               
+            }
+        }
         
     }
 }

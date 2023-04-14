@@ -111,7 +111,7 @@ pipeline
             }
         }
         
-        stage('Docker Image') 
+        stage('Build Image') 
         {
             steps 
             {
@@ -132,6 +132,15 @@ pipeline
                         docker push kalpdeep/amkart.services.order:latest '''
             }
         }
+	
+	stage('Build Image') 
+        {
+            steps 
+            {
+                echo 'deploying build ..'
+                bat '''docker-compose up -d'''
+	    }
+	}
         
         
     }
